@@ -50,7 +50,7 @@ namespace RecGuilhermeMASP.Controllers
 
             return View(news);
         }
-
+        [Authorize]
         // GET: News/Create
         public ActionResult Create()
         {
@@ -106,7 +106,7 @@ namespace RecGuilhermeMASP.Controllers
             ViewBag.CategoryId = new SelectList(db.Categories, "CategoryId", "Name", news.CategoryId);
             return View(news);
         }
-
+        [Authorize]
         // GET: News/Edit/5
         public ActionResult Edit(int? id)
         {

@@ -1,0 +1,137 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+@model IEnumerable<RecGuilhermeMASP.Models.News>
+
+<div class="full">
+    <!--banner-section-->
+    <div class="banner-section">
+        <h3 class="tittle">Notícias em Destaque <i class="glyphicon glyphicon-picture"></i></h3>
+        <div class="banner">
+            <div class="callbacks_container">
+                <ul class="rslides" id="slider4">
+                    @foreach (var item in Model)
+                    {
+                        <li>
+                            <h5 class="top">
+                                <a href="~/News/Details/@item.NewsId">@Html.DisplayFor(modelItem => item.Title)<br /><span class=" glyphicon glyphicon-list-alt span_link"> </span>  @Html.DisplayFor(modelItem => item.Category.Name)<br /></a>
+                            </h5>
+                            <a href="~/News/Details/@item.NewsId"><img src="@Url.Content(item.Capa)" class="img-responsive" alt="" /></a>
+                            <div class="b-bottom">
+                                <h5 class="top"><a href="~/News/Details/@item.NewsId"> </a> </h5>
+                                <p><a class="span_link" href="~/News/Details/@item.NewsId"><span class="glyphicon glyphicon-circle-arrow-right"></span></a></p>
+                            </div>
+                        </li>
+                    }
+
+            </div>
+            <!--banner-->
+            <script type="text/javascript" src="~/Content/js/responsiveslides.min.js"></script>
+            <script>
+                // You can also use "$(window).load(function() {"
+                $(function () {
+                    // Slideshow 4
+                    $("#slider4").responsiveSlides({
+                        auto: true,
+                        pager: true,
+                        nav: true,
+                        speed: 700,
+                        namespace: "callbacks",
+                        before: function () {
+                            $('.events').append("<li>before event fired.</li>");
+                        },
+                        after: function () {
+                            $('.events').append("<li>after event fired.</li>");
+                        }
+                    });
+
+                });
+            </script>
+
+            <div class="clearfix"> </div>
+
+        </div>
+    </div>
+    <div class="clearfix"> </div>
+
+    <!--//banner-->
+    <!--//top-news-->
+    <!--//banner-section-->
+    <div class="banner-right-text">
+        <h3 class="tittle">Categorias  <i class="glyphicon glyphicon-list-alt"></i></h3>
+        <!--/general-news-->
+        <div class="general-news">
+            <div class="general-inner">
+                <div class="logo">
+                    <h3> Recentes </h3>
+                </div>
+                @{
+                    var Lst = ViewBag.Categorias as IEnumerable<RecGuilhermeMASP.Models.Category>;
+                }
+                <ul class="cl-effect-16">
+                    @foreach (var item in ViewBag.Categorias)
+                    {
+                        using (Ajax.BeginForm("Index", "News", new AjaxOptions { HttpMethod = "Get", InsertionMode = InsertionMode.Replace, UpdateTargetId = "divListNews" }))
+                        {
+
+                            <li><input class="category" type="submit" id="Pesquisa" name="Pesquisa" value="@item.Name" onclick="msg()"></li>
+
+
+                        }
+
+                    }
+                </ul>
+                <!-- script-for-nav -->
+                <script>
+                    $("span.menu").click(function () {
+                        $(".top-menu ul").slideToggle(300, function () {
+                            // Animation complete.
+                        });
+                    });
+                </script>
+                <!-- script-for-nav -->
+                <ul class="side-icons">
+                    <li><a class="fb" href="#"></a></li>
+                    <li><a class="twitt" href="#"></a></li>
+                    <li><a class="goog" href="#"></a></li>
+                    <li><a class="drib" href="#"></a></li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+    <div class="col-md-9 main">
+
+        <!--/top-news-->
+
+        <div class="top-news">
+            <div class="top-inner">
+                <h3 class="tittle">Notícias  <i class="glyphicon glyphicon-globe"></i></h3>
+                @foreach (var item in Model)
+                {
+                    <h5 class="top"><a href="~/News/Details/@item.NewsId"> @Html.DisplayFor(modelItem => item.Title) <br /> <span class=" glyphicon glyphicon-list-alt span_link"> </span>  @Html.DisplayFor(modelItem => item.Category.Name)<br /><span class="glyphicon glyphicon-tags span_link"> @Html.DisplayFor(modelItem => item.PostDate)</span></a> </h5>
+
+                    <div class="col-md-6 top-text">
+                        <a href="~/News/Details/@item.NewsId"><img src="@Url.Content(item.Photo)" height="220px;" width="400px;" class="img-responsive" alt=""></a>
+                    </div>
+                    <div class="col-md-6 top-text two">
+
+                        <p>
+                            @Html.DisplayFor(modelItem => item.ResumeText)
+                        </p>
+                        <p class="span_link"><span class="glyphicon glyphicon-comment"> AUTOR: </span> @Html.DisplayFor(modelItem => item.Author)</p><p class="span_link"><br /><span class="glyphicon glyphicon-circle-arrow-right"></span><a href="~/News/Details/@item.NewsId">  Leia mais</a></p>
+                    </div>
+                    <div class="clearfix"> </div>
+
+                }
+
+            </div>
+            <h3 class="novasnot"><a href="~/News/Index">Mostra Todas    <i class="glyphicon glyphicon-download"></i></a></h3>
+
+        </div>
+    </div>
+    <!--//general-news-->
+    <!--/news-->
+    <!--/news-->
+</div>
+<div class="clearfix"> </div>
